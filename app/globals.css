@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f5f0e8;
+  --panel: #fffaf2;
+  --panel-strong: #1d3127;
+  --ink: #14211b;
+  --muted: #536157;
+  --line: rgba(20, 33, 27, 0.12);
+  --accent: #2f6b4f;
+  --accent-soft: #d8eadb;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(95, 143, 113, 0.15), transparent 34%),
+    radial-gradient(circle at top right, rgba(222, 184, 135, 0.22), transparent 32%),
+    linear-gradient(180deg, #f6f1e8 0%, #efe6d8 100%);
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hero-shell,
+.content-shell {
+  width: min(1120px, calc(100vw - 2rem));
+  margin: 0 auto;
+}
+
+.hero-shell {
+  padding: 4rem 0 2rem;
+}
+
+.hero-grid {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.eyebrow,
+.section-kicker {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero-card,
+.capability-card,
+.workflow-panel,
+.eval-shell {
+  border: 1px solid var(--line);
+  background: rgba(255, 250, 242, 0.78);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgba(68, 61, 45, 0.09);
+}
+
+.hero-card {
+  border-radius: 28px;
+  padding: 1.25rem;
+}
+
+.hero-card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.status-strip {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.status-strip > div {
+  border-top: 1px solid var(--line);
+  padding-top: 0.75rem;
+}
+
+.status-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.primary-cta,
+.secondary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.85rem 1.3rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.94rem;
+  font-weight: 700;
+  transition: transform 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.primary-cta {
+  background: var(--panel-strong);
+  color: #f8f3ea;
+}
+
+.secondary-cta {
+  border: 1px solid var(--line);
+  background: rgba(255, 250, 242, 0.75);
+  color: var(--ink);
+}
+
+.primary-cta:hover,
+.secondary-cta:hover {
+  transform: translateY(-1px);
+}
+
+.content-shell {
+  padding: 2rem 0 0;
+}
+
+.section-heading {
+  margin-bottom: 1.25rem;
+}
+
+.section-heading h2 {
+  margin: 0.35rem 0 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.card-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.capability-card {
+  border-radius: 24px;
+  padding: 1.25rem;
+}
+
+.capability-card p,
+.workflow-panel p,
+.eval-shell td {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.workflow-panel,
+.eval-shell {
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.workflow-step {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.workflow-step:first-child {
+  border-top: 0;
+}
+
+.step-number {
+  font-family: 'Courier New', monospace;
+  color: var(--accent);
+}
+
+.eval-shell table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.eval-shell th,
+.eval-shell td {
+  padding: 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid var(--line);
+}
+
+.eval-shell th {
+  border-top: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (min-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1.3fr 0.8fr;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .status-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
