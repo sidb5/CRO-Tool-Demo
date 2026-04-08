@@ -25,7 +25,7 @@ It is intentionally not the full application. The original product includes priv
 
 ## Why this exists
 
-The goal is to showcase how I build products with LLMs without handing over the monetizable core of the underlying business. This version demonstrates:
+To showcase how I build products with LLMs without handing over the monetizable core of the underlying business. This version demonstrates:
 
 - product thinking
 - frontend execution
