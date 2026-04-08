@@ -47,6 +47,10 @@ Then open [http://localhost:3000](http://localhost:3000).
 
 See [ARCHITECTURE.md](./ARCHITECTURE.md) for the sanitized system design, API boundaries, storage model, and LLM evaluation approach behind the original product.
 
+## Case study
+
+See [CASE_STUDY.md](./CASE_STUDY.md) for the product problem, system decisions, engineering tradeoffs, and the reasoning behind the sanitized public version.
+
 ## Notes
 
 - This repository is intentionally static and sanitized.

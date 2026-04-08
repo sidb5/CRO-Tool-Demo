@@ -13,6 +13,63 @@ The original product followed a split between four concerns:
 
 The core product idea was not "send one big prompt and hope." The architecture was designed so each stage had a distinct contract and could fail, retry, or regenerate independently.
 
+## Full system diagram
+
+The diagram below includes both the public-safe parts still present in this repository and the private layers that were intentionally removed before publishing.
+
+```mermaid
+flowchart LR
+    U["CRO user"] --> FE["Next.js app router frontend<br/>dashboard, intake, editing, review"]
+
+    FE --> AUTH["Auth/session layer<br/>Supabase auth"]
+    FE --> API["Server routes / API boundary layer"]
+
+    API --> INTAKE["Intake pipeline<br/>email, PDF, formal request parsing"]
+    API --> PROFILE["Profile service<br/>company capabilities, team, facilities"]
+    API --> ORCH["Generation orchestrator"]
+    API --> DELIVERY["Delivery actions<br/>share, export, send"]
+    API --> BILLING["Billing and plan gates"]
+    API --> ANALYTICS["Usage and product analytics"]
+
+    INTAKE --> EXTRACT["Structured extractor<br/>typed normalized request object"]
+    PROFILE --> ORCH
+    EXTRACT --> ORCH
+
+    ORCH --> PROMPTS["Prompt/template layer<br/>private domain prompts"]
+    ORCH --> EVALS["Evaluation checks<br/>schema, assumptions, completeness"]
+    ORCH --> MODEL["LLM provider"]
+
+    MODEL --> ORCH
+    PROMPTS --> ORCH
+    EVALS --> ORCH
+
+    ORCH --> SECTIONSTORE["Section persistence<br/>artifact, section, version storage"]
+    SECTIONSTORE --> REVIEW["Human review editor<br/>save, regenerate, restore"]
+    REVIEW --> DELIVERY
+
+    API --> DB["Supabase Postgres + storage"]
+    SECTIONSTORE --> DB
+    PROFILE --> DB
+    BILLING --> DB
+    ANALYTICS --> DB
+
+    DELIVERY --> EXT["External services<br/>email, doc export, public share links"]
+    BILLING --> PAY["Payment provider"]
+    API --> OBS["Observability / error reporting"]
+
+    classDef public fill:#e8f1ea,stroke:#2f6b4f,color:#14211b;
+    classDef private fill:#f6eadb,stroke:#8d6b3f,color:#3f2b18;
+
+    class FE,API,REVIEW public;
+    class INTAKE,PROFILE,ORCH,DELIVERY,BILLING,ANALYTICS,EXTRACT,PROMPTS,EVALS,MODEL,SECTIONSTORE,DB,EXT,PAY,OBS,AUTH private;
+```
+
+### Reading the diagram
+
+- Green nodes represent the public-safe shape still reflected in this repo.
+- Sand nodes represent private implementation layers that were removed before publishing.
+- The important architectural point is the boundary design, not the exact vendor or prompt contents.
+
 ## High-level flow
 
 ```text
@@ -98,6 +155,24 @@ That shape matters because it reflects product intent:
 - intake is not the same responsibility as generation
 - regeneration should be targeted
 - user edits should not go back through the full AI pipeline
+
+## Public vs removed layers
+
+What remains in this repository:
+
+- frontend positioning and information architecture
+- sanitized workflow and eval documentation
+- typed public-facing structure
+- a clear explanation of orchestration boundaries
+
+What was removed before publishing:
+
+- live route handlers
+- prompt bodies and prompt composition logic
+- storage schema and migrations
+- provider credentials and environment bindings
+- commercial features like billing, referrals, exports, and sharing
+- domain-specific workflow details that would reveal the product's moat
 
 ## Persistence model
 
